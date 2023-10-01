@@ -1,5 +1,5 @@
-/* eslint-disable prettier/prettier */
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { UserEntity } from './User';
 
 @Entity({ name: 'profile' })
 export class ProfileEntity {
@@ -14,4 +14,13 @@ export class ProfileEntity {
 
   @Column({ nullable: true })
   avatar: string;
+
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  created_at: Date;
+
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  updated_at: Date;
+
+  @OneToOne(() => UserEntity, (user) => user.profile, { eager: true })
+  user: UserEntity;
 }

@@ -8,6 +8,10 @@ import { CategoryEntity } from './entities/Category';
 import { ItemEntity } from './entities/Item';
 import { CartEntity } from './entities/CartEntity';
 import { UserModule } from './user/user.module';
+import { PasswordService } from './utils/password/password.service';
+import { ProfileModule } from './profile/profile.module';
+import { CategoryModule } from './category/category.module';
+import { ItemModule } from './item/item.module';
 
 @Module({
   imports: [
@@ -28,8 +32,11 @@ import { UserModule } from './user/user.module';
       synchronize: true,
     }),
     UserModule,
+    ProfileModule,
+    CategoryModule,
+    ItemModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, PasswordService],
 })
 export class AppModule {}

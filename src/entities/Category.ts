@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { ItemEntity } from './Item';
 
@@ -13,7 +12,7 @@ export class CategoryEntity {
   @Column()
   description: string;
 
-  @OneToMany(() => ItemEntity, (item) => item.category)
+  @OneToMany(() => ItemEntity, (item) => item.category, { eager: true })
   item: ItemEntity[];
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
@@ -21,4 +20,5 @@ export class CategoryEntity {
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updated_at: Date;
+  category: ItemEntity;
 }

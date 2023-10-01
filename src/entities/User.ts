@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import {
   Column,
   Entity,
@@ -8,13 +7,16 @@ import {
 } from 'typeorm';
 import { ProfileEntity } from './Profile';
 import { CartEntity } from './CartEntity';
-
+import { Exclude } from 'class-transformer';
 @Entity({ name: 'user' })
 export class UserEntity {
+  constructor(partial: Partial<UserEntity>) {
+    Object.assign(this, partial);
+  }
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 
-  @OneToOne(() => ProfileEntity)
+  @OneToOne(() => ProfileEntity, (profile) => profile.user)
   @JoinColumn()
   profile: ProfileEntity;
 
@@ -32,6 +34,7 @@ export class UserEntity {
   email: string;
 
   @Column({ nullable: false })
+  @Exclude()
   password: string;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
